@@ -1,0 +1,27 @@
+START S.
+
+Var: "var";
+Name: %\\w+%;
+Sep: ":";
+Array: "Array";
+Lpar: "<";
+Rpar: ">";
+Comma: ",";
+Eps: "eps";
+Tuple: "Tuple";
+Nullable: %\\?%;
+
+? S: Var Name Sep !C;
+? C: !A;
+? C: !P;
+? A: Array Lpar !T Rpar !N;
+? P: Tuple Lpar !E Rpar !N;
+? E: !T !Es;
+? Es: Comma !T !Es;
+? Es: Eps;
+? T: Name !Ts !N;
+? T: !A;
+? Ts: Lpar !T Rpar;
+? Ts: Eps;
+? N: Nullable;
+? N: Eps;

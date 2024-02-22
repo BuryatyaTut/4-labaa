@@ -1,0 +1,21 @@
+START E.
+
+Plus: "+";
+Mul: "*";
+Div: "/";
+Minus: "-";
+LBR: "(";
+RBR: ")";
+Number: %[0-9]+%;
+Eps: "eps";
+
+? E: !T !Es<var0.val> {res.val = var1.val;};
+? Es[double out1]: Plus !T !Es<var1.val> {res.val = out1 + var2.val;};
+? Es[double out1]: Minus !T !Es<var1.val> {res.val = out1 - var2.val;};
+? Es[double out1]: Eps {epsNode.val = out1;};
+? T: !F !Ts<var0.val> {res.val = var1.val;};
+? Ts[double out1]: Mul !F !Ts<var1.val> {res.val = out1 * var2.val;};
+? Ts[double out1]: Div !F !Ts<var1.val> {res.val = out1 / var2.val;};
+? Ts[double out1]: Eps {epsNode.val = out1;};
+? F: LBR !E RBR {res.val = var1.val;};
+? F: Number{res.val = Integer.parseInt(var0.getText());};
